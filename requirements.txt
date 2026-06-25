@@ -1,0 +1,37 @@
+# LangChain - the framework that helps us build AI agents
+# It gives us tools to connect LLMs, search tools, and agents together
+langchain
+langchain-community
+
+# LangChain Google Gemini integration
+# Connects LangChain to Google's Gemini models (free tier available)
+langchain-google-genai
+
+# LangChain Groq integration
+# Connects LangChain to Groq's lightning-fast inference
+# Groq runs open-source models like Llama 3.3 70B for FREE
+langchain-groq
+
+# DuckDuckGo Search - a FREE search tool (no API key needed!)
+# Our Researcher Agent uses this to search the internet
+ddgs
+
+# FastAPI - a modern Python web framework to create our backend API
+# Think of it like Flask but faster and with automatic documentation
+fastapi
+
+# Uvicorn - the server that actually runs our FastAPI app
+# FastAPI is the app, Uvicorn is the engine that serves it
+uvicorn
+
+# Streamlit - creates a beautiful web UI with just Python code
+# No HTML/CSS/JS needed! Perfect for AI demos
+streamlit
+
+# Requests - a simple library to make HTTP calls
+# Our Streamlit app uses this to talk to our FastAPI backend
+requests
+
+# python-dotenv - loads API keys from a .env file
+# So we never hardcode secrets in our code
+python-dotenv
