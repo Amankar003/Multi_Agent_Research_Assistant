@@ -193,16 +193,17 @@ if research_button:
         # ── Show a spinner while the agents are working ──
         # st.spinner shows a loading animation with a message
         # Everything inside the "with" block runs while the spinner shows
-        with st.spinner("🤖 Agents are working on your research... This may take 30-60 seconds."):
+        with st.spinner("🤖 Agents are performing deep research... This may take 60-90 seconds (8 search queries + 2 AI analyses)."):
             try:
                 # ── Send the topic to our FastAPI backend ──
                 # requests.post() sends a POST request
                 # json={"topic": topic} sends the topic as JSON data
-                # timeout=120 means wait up to 120 seconds for a response
+                # timeout=300 means wait up to 5 minutes for a response
+                # (the enhanced pipeline runs 8 searches + 2 LLM calls)
                 response = requests.post(
                     f"{FASTAPI_URL}/research",
                     json={"topic": topic},
-                    timeout=120
+                    timeout=300
                 )
 
                 # ── Check if the request was successful ──
@@ -222,7 +223,7 @@ if research_button:
                 # Each tab shows a different part of the results
                 tab1, tab2, tab3 = st.tabs([
                     "📄 Final Report",
-                    "📝 Summary",
+                    "📝 Research Notes",
                     "🔍 Raw Search Results"
                 ])
 
@@ -231,9 +232,9 @@ if research_button:
                     st.markdown(f'<p class="section-header">Research Report: {topic}</p>', unsafe_allow_html=True)
                     st.markdown(data["report"])
 
-                # Tab 2: The Summary bullet points
+                # Tab 2: The comprehensive research notes from the Analyst agent
                 with tab2:
-                    st.markdown(f'<p class="section-header">Summary: {topic}</p>', unsafe_allow_html=True)
+                    st.markdown(f'<p class="section-header">Research Notes: {topic}</p>', unsafe_allow_html=True)
                     st.markdown(data["summary"])
 
                 # Tab 3: Raw search results (for the curious)
@@ -268,20 +269,20 @@ with st.sidebar:
     st.markdown("""
     This app uses **3 AI agents** that work together like a relay team:
     
-    **1. 🔍 Researcher Agent**
-    - Searches the internet using DuckDuckGo
-    - Finds relevant articles and information
-    - Returns raw search results
+    **1. 🔍 Research Agent**
+    - Runs **8 targeted sub-queries** via DuckDuckGo
+    - Covers overview, history, applications, challenges, future, stats, and more
+    - Returns comprehensive raw research data
     
-    **2. 📝 Summarizer Agent**
-    - Reads the raw search results
-    - Uses Google Gemini to create bullet points
-    - Returns a clean summary
+    **2. 📝 Research Analyst**
+    - Analyzes all the raw search data
+    - Uses Groq (Llama 3.3 70B) to create **detailed research notes**
+    - Produces ~1500-2500 words of structured analysis
     
-    **3. 📄 Report Writer Agent**
-    - Takes the summary bullet points
-    - Uses Groq (Llama 3.3 70B) to write the report
-    - Adds introduction, analysis, and conclusion
+    **3. 📄 Report Writer**
+    - Transforms research notes into a **professional report**
+    - Uses Groq (Llama 3.3 70B) to generate **3000-5000+ words**
+    - Includes executive summary, tables, case studies, and more
     """)
 
     st.markdown("---")
@@ -291,9 +292,8 @@ with st.sidebar:
     - 🦜 **LangChain** — Agent framework
     - ⚡ **FastAPI** — Backend API
     - 🎨 **Streamlit** — Frontend UI
-    - 💎 **Google Gemini** — Summarization
-    - 🦙 **Groq (Llama 3.3 70B)** — Report writing
-    - 🔍 **DuckDuckGo** — Free search
+    - 🦙 **Groq (Llama 3.3 70B)** — AI analysis & report writing
+    - 🔍 **DuckDuckGo** — Free multi-query search
     """)
 
     st.markdown("---")
